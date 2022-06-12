@@ -1,0 +1,98 @@
+{
+  "abi": [
+    {
+      "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+      "name": "allPairs",
+      "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "allPairsLength",
+      "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "allInfo",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256[30]",
+              "name": "POSSIBLE_PROTOCOL_PERCENT",
+              "type": "uint256[30]"
+            },
+            {
+              "internalType": "uint256",
+              "name": "MAX_TOTAL_FEE_PERCENT",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "MAX_PROTOCOL_FEE_PERCENT",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalSwaps",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "protocolFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "devFeePercent",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "feeTo",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "feeToSetter",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "devFeeTo",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "devFeeSetter",
+              "type": "address"
+            },
+            {
+              "internalType": "bool",
+              "name": "allFeeToProtocol",
+              "type": "bool"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "INIT_CODE_PAIR_HASH",
+              "type": "bytes32"
+            }
+          ],
+          "internalType": "struct IFactory.AllInfo",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ]
+}
