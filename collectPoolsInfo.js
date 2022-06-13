@@ -1,8 +1,12 @@
 const Web3 = require('web3')
+const BigNumber = require('bignumber.js')
 const axios = require('axios').default
 const Pair = require('./abi/Pair.json')
 const networks = require('./networks.json')
 const { readInfo, saveInfo, timeout, getStringDate } = require('./utils')
+
+// prevent numbers from scientific notation
+BigNumber.config({ EXPONENTIAL_AT: 1e9 })
 
 async function getPlatforms() {
   try {
@@ -69,39 +73,46 @@ async function collect() {
           await timeout(20)
           const allReserves = await pairContract.methods.getReserves().call()
 
-          reserve0 = allReserves[0] / 18
-          reserve1 = allReserves[1] / 18
+          // TODO: fetch it from the token contract
+          const TOKEN_DECIMALS = 18
+          const DECIMALS_DEVIDER = 10 ** TOKEN_DECIMALS
+
+          reserve0 = new BigNumber(allReserves[0]).div(DECIMALS_DEVIDER)
+          reserve1 = new BigNumber(allReserves[1]).div(DECIMALS_DEVIDER)
         } catch (error) {
           console.warn('Fail on token addresses fetching from the Pair contract')
           console.error(error)
         }
 
-        let reserve0InUsd
-        let reserve1InUsd
+        let token0Price
+        let token1Price
 
         try {
           await timeout(20)
-          reserve0InUsd = await getTokenPrice(currentPlatform.id, token0)
+          token0Price = await getTokenPrice(currentPlatform.id, token0)
           await timeout(20)
-          reserve1InUsd = await getTokenPrice(currentPlatform.id, token1)
+          token1Price = await getTokenPrice(currentPlatform.id, token1)
         } catch (error) {
           console.warn('Fail on token information fetching')
           console.error(error)
         }
 
-        const usdLiquidity0 = reserve0 && reserve0InUsd ? reserve0 * reserve0InUsd : false
-        const usdLiquidity1 = reserve1 && reserve1InUsd ? reserve1 * reserve1InUsd : false
+        const getTotal = (usdLiquidity) =>
+          !usdLiquidity ? '?' : usdLiquidity.isLessThan(0.0001) ? 'Too little' : usdLiquidity.toString()
+
+        const usdLiquidity0 = reserve0 && token0Price ? reserve0.times(token0Price) : false
+        const usdLiquidity1 = reserve1 && token1Price ? reserve1.times(token1Price) : false
 
         data.push({
           [poolAddress]: {
             'Token 1': `address: ${token0 || '?'}`,
-            'Liquidity 1': `Token amount: ${reserve0 || '?'}; USD price: ${reserve0InUsd || '?'}; USD total: ${
-              usdLiquidity0 || '?'
-            }`,
+            'Liquidity 1': `Token amount: ${reserve0 || '?'}; USD price: ${token0Price || '?'}; USD total: ${getTotal(
+              usdLiquidity0
+            )}`,
             'Token 2': `address: ${token1 || '?'}`,
-            'Liquidity 2': `Token amount: ${reserve1 || '?'}; USD price: ${reserve1InUsd || '?'}; USD total: ${
-              usdLiquidity1 || '?'
-            }`,
+            'Liquidity 2': `Token amount: ${reserve1 || '?'}; USD price: ${token1Price || '?'}; USD total: ${getTotal(
+              usdLiquidity1
+            )}`,
           },
         })
       }
