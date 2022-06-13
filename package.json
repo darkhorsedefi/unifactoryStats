@@ -4,10 +4,12 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "collectStats": "node index.js",
+    "collectPoolsInfo": "node collectPoosInfo.js"
   },
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.27.2",
     "chalk": "^5.0.1",
     "web3": "^1.7.1"
   }

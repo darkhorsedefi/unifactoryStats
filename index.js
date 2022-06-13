@@ -2,10 +2,7 @@ const Web3 = require('web3')
 const networks = require('./networks.json')
 const Storage = require('./abi/StorageV2.json')
 const Factory = require('./abi/Factory.json')
-const { saveInfo } = require('./utils')
-
-const STATS_FILE = './stats.json'
-const timeout = async (ms) => new Promise((res) => setTimeout(() => res(true), ms))
+const { saveInfo, timeout, getStringDate } = require('./utils')
 
 const EXCLUDED_DOMAINS = /(localhost)|(onout\.xyz)|(testing)|(127.0.0.1)/
 const APP_STORAGE_KEY = 'definance'
@@ -30,12 +27,16 @@ async function collectDomainStats(domainData) {
       const web3 = new Web3(rpc)
       const factoryContract = new web3.eth.Contract(Factory.abi, factory)
 
+      stats = {
+        ['Network']: networkName,
+        ['Network ID']: chainId,
+      }
+
       try {
         const { totalSwaps, totalFee, protocolFee, allFeeToProtocol } = await factoryContract.methods.allInfo().call()
 
         stats = {
           ...stats,
-          ['Network']: `${networkName} (${chainId})`,
           ['Factory']: factory,
           ['Total swaps']: totalSwaps,
           ['Total fee']: totalFee,
@@ -101,10 +102,14 @@ async function collectStats() {
 
       const domainInfo = await collectDomainStats(data)
 
-      await saveInfo(STATS_FILE, {
+      await saveInfo(`./stats.json`, {
         domain: currentDomain,
         info: domainInfo || 'no information',
       })
+      // await saveInfo(`./stats_${getStringDate()}.json`, {
+      //   domain: currentDomain,
+      //   info: domainInfo || 'no information',
+      // })
     }
   } catch (error) {
     console.log(chalk.bgRed(`Fail on Storage methods`))
