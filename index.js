@@ -6,6 +6,7 @@ const { saveInfo, timeout, getStringDate } = require('./utils')
 
 const EXCLUDED_DOMAINS = /(localhost)|(onout\.xyz)|(testing)|(127.0.0.1)/
 const APP_STORAGE_KEY = 'definance'
+const STORAGE_NETWORK_ID = 56
 
 async function collectDomainStats(domainData) {
   try {
@@ -22,6 +23,9 @@ async function collectDomainStats(domainData) {
 
     for (let y = 0; y < chainIds.length; y += 1) {
       const chainId = chainIds[y]
+
+      if (!networks[chainId]) continue
+
       const { name: networkName, rpc } = networks[chainId]
       const { factory } = contracts[chainId]
       const web3 = new Web3(rpc)
@@ -82,7 +86,7 @@ async function collectDomainStats(domainData) {
 
 async function collectStats() {
   const { default: chalk } = await import('chalk')
-  const { storage, rpc, chainId } = networks[56]
+  const { storage, rpc } = networks[STORAGE_NETWORK_ID]
   const web3 = new Web3(rpc)
   const storageContract = new web3.eth.Contract(Storage.abi, storage)
 
@@ -102,14 +106,10 @@ async function collectStats() {
 
       const domainInfo = await collectDomainStats(data)
 
-      await saveInfo(`./stats.json`, {
+      await saveInfo('./stats.json', {
         domain: currentDomain,
         info: domainInfo || 'no information',
       })
-      // await saveInfo(`./stats_${getStringDate()}.json`, {
-      //   domain: currentDomain,
-      //   info: domainInfo || 'no information',
-      // })
     }
   } catch (error) {
     console.log(chalk.bgRed(`Fail on Storage methods`))

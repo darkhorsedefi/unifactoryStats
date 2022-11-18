@@ -1,4 +1,23 @@
 {
+  "1": {
+    "name": "Ethereum",
+    "rpc": "https://rpc.ankr.com/eth",
+    "chainId": 1,
+    "explorer": "https://etherscan.io",
+    "color": "#627EEA",
+    "multicall": "0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441",
+    "ENSRegistry": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+    "baseCurrency": {
+      "decimals": 18,
+      "name": "ETH",
+      "symbol": "ETH"
+    },
+    "wrappedToken": {
+      "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "name": "Wrapped Etherer",
+      "symbol": "WETH"
+    }
+  },
   "25": {
     "name": "Cronos",
     "rpc": "https://evm.cronos.org",
@@ -17,9 +36,27 @@
       "symbol": "WCRO"
     }
   },
+  "534": {
+    "name": "Candle",
+    "rpc": "https://rpc.cndlchain.com/",
+    "chainId": 534,
+    "explorer": "https://candleexplorer.com/",
+    "color": "#000080",
+    "multicall": "0x4A21871491adC2C429F9903918C306c97dd295A3",
+    "baseCurrency": {
+      "decimals": 18,
+      "name": "Candle",
+      "symbol": "CNDL"
+    },
+    "wrappedToken": {
+      "address": "0x85FA00f55492B0437b3925381fAaf0E024747627",
+      "name": "Wrapped Candle",
+      "symbol": "WCNDL"
+    }
+  },
   "56": {
     "name": "BSC",
-    "rpc": "https://bsc-dataseed.binance.org",
+    "rpc": "https://bscrpc.com/",
     "chainId": 56,
     "explorer": "https://bscscan.com",
     "color": "#CC9B00",
@@ -54,7 +91,24 @@
       "symbol": "WMATIC"
     }
   },
-
+  "180": {
+    "name": "AME Chain",
+    "rpc": "https://node1.amechain.io/",
+    "chainId": 180,
+    "explorer": "https://amescan.io/",
+    "color": "#ff0500",
+    "multicall": "0x1763d5e86452Ed9C13b874fDe60A0669D11C5d40",
+    "baseCurrency": {
+      "decimals": 18,
+      "name": "AME",
+      "symbol": "AME"
+    },
+    "wrappedToken": {
+      "address": "0xCc9bD40124EfedF6F198B8b5b50697dC635FaaC4",
+      "name": "Wrapped AME",
+      "symbol": "WAME"
+    }
+  },
   "43114": {
     "name": "Avalanche",
     "rpc": "https://api.avax.network/ext/bc/C/rpc",
@@ -163,14 +217,14 @@
       "symbol": "WETH"
     }
   },
-  "4": {
-    "name": "Rinkeby",
-    "rpc": "https://rinkeby.infura.io/v3/fc55ddb25b694fef8e2363f6b6c9341f",
-    "chainId": 4,
-    "explorer": "https://rinkeby.etherscan.io",
+  "5": {
+    "name": "Görli",
+    "rpc": "https://goerli.infura.io/v3/fc55ddb25b694fef8e2363f6b6c9341f",
+    "chainId": 5,
+    "explorer": "https://goerli.etherscan.io",
     "color": "#f6c343",
-    "storage": "0xd2baDd65d97549EB8af9B83BcD74768c9ebaeC31",
-    "multicall": "0x42Ad527de7d4e9d9d011aC45B31D8551f8Fe9821",
+    "storage": "0x171a664f12672a61E4e948BC7Fd38eB34b64a15b",
+    "multicall": "0xFD4e092227e876dD8F2d036FA8fEB23F8A7F94ca",
     "ENSRegistry": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
     "baseCurrency": {
       "decimals": 18,
@@ -178,9 +232,27 @@
       "symbol": "ETH"
     },
     "wrappedToken": {
-      "address": "0xc778417E063141139Fce010982780140Aa0cD5Ab",
+      "address": "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
       "name": "Wrapped Ether",
       "symbol": "WETH"
+    }
+  },
+  "19845": {
+    "name": "BTCIX Network",
+    "rpc": "https://seed.btcix.org/rpc",
+    "chainId": 19845,
+    "explorer": "https://btcixscan.com",
+    "color": "#91ac14",
+    "multicall": "0xcd8F23091F5379cf355F365dBa8C48A2C721C1e5",
+    "baseCurrency": {
+      "decimals": 18,
+      "name": "BITCOLOJIX",
+      "symbol": "BTCIX"
+    },
+    "wrappedToken": {
+      "address": "0x1763d5e86452Ed9C13b874fDe60A0669D11C5d40",
+      "name": "Wrapped BITCOLOJIX",
+      "symbol": "WBTCIX"
     }
   }
 }

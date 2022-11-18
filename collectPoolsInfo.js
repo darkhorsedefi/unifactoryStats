@@ -22,6 +22,8 @@ async function getPlatforms() {
 }
 
 async function getTokenPrice(platformId, tokenAddress) {
+  if (!platformId || !tokenAddress) return false
+
   try {
     const response = await axios.get(
       [
@@ -35,8 +37,9 @@ async function getTokenPrice(platformId, tokenAddress) {
   } catch (error) {
     console.warn('Fail on fetching token price')
     console.error(error)
-    return false
   }
+
+  return false
 }
 
 async function collect() {
@@ -50,7 +53,7 @@ async function collect() {
       const { info } = stats[itemIndex]
       const pools = info['Liquidity pools']
 
-      if (!pools.length) continue
+      if (!pools?.length) continue
 
       const networkId = info['Network ID']
       const { rpc } = networks[networkId]
@@ -80,8 +83,8 @@ async function collect() {
           reserve0 = new BigNumber(allReserves[0]).div(DECIMALS_DEVIDER)
           reserve1 = new BigNumber(allReserves[1]).div(DECIMALS_DEVIDER)
         } catch (error) {
-          console.warn('Fail on token addresses fetching from the Pair contract')
-          console.error(error)
+          console.error('Fail on token addresses fetching from the Pair contract', error)
+          continue
         }
 
         let token0Price
@@ -89,9 +92,9 @@ async function collect() {
 
         try {
           await timeout(20)
-          token0Price = await getTokenPrice(currentPlatform.id, token0)
+          token0Price = await getTokenPrice(currentPlatform?.id, token0)
           await timeout(20)
-          token1Price = await getTokenPrice(currentPlatform.id, token1)
+          token1Price = await getTokenPrice(currentPlatform?.id, token1)
         } catch (error) {
           console.warn('Fail on token information fetching')
           console.error(error)
@@ -121,7 +124,6 @@ async function collect() {
     }
 
     await saveInfo(`./pools.json`, stats)
-    // await saveInfo(`./pools_${getStringDate()}.json`, stats)
   } catch (error) {
     console.warn('Fail on pools info collection')
     console.error(error)

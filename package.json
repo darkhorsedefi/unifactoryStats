@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "collectStats": "node index.js",
-    "collectPoolsInfo": "node collectPoosInfo.js"
+    "collectPoolsInfo": "node collectPoolsInfo.js",
+    "formatInformation": "node format.js"
   },
   "license": "ISC",
   "dependencies": {
