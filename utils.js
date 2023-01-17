@@ -45,8 +45,9 @@ async function readInfo(file) {
   return new Promise((resolve, reject) => {
     try {
       fs.readFile(file, 'utf8', (error, jsonString) => {
+        
         if (error) return reject(error)
-
+        
         resolve(JSON.parse(jsonString))
       })
     } catch (error) {

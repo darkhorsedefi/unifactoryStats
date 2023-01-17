@@ -94,6 +94,8 @@ async function collectStats() {
     const allKeys = await storageContract.methods.allKeys().call()
     const allKeysData = await storageContract.methods.allKeysData().call()
 
+    
+
     for (let x = 0; x < allKeysData.length; x += 1) {
       const currentDomain = allKeys[x]
 
