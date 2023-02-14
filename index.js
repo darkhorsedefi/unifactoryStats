@@ -85,6 +85,13 @@ async function collectDomainStats(domainData) {
 }
 
 async function collectStats() {
+
+  // clear stat.json file
+
+  const fs = require('fs')
+  fs.writeFileSync('./stats.json', '[]')
+
+
   const { default: chalk } = await import('chalk')
   const { storage, rpc } = networks[STORAGE_NETWORK_ID]
   const web3 = new Web3(rpc)
@@ -108,7 +115,7 @@ async function collectStats() {
 
       const domainInfo = await collectDomainStats(data)
 
-      await saveInfo('./stats.json', {
+      await saveInfo('./stats.json', { 
         domain: currentDomain,
         info: domainInfo || 'no information',
       })
@@ -117,6 +124,11 @@ async function collectStats() {
     console.log(chalk.bgRed(`Fail on Storage methods`))
     console.error(error)
   }
+
+  //close file 
+  fs.closeSync(fs.openSync('./stats.json', 'w'))
+ 
+  process.exit(0)
 }
 
 collectStats()
